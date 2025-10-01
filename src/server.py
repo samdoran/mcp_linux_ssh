@@ -8,6 +8,11 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP("Linux SSH")
 
 
+class MCPError(Exception):
+    def __init__(self, msg: str = ""):
+        self.msg = msg
+
+
 @mcp.tool()
 def run_ssh(host: str, command: str) -> dict[str, t.Any]:
     """Run an SSH command on a remote host"""
