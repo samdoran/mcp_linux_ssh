@@ -1,4 +1,3 @@
-import json
 import shutil
 import subprocess
 import typing as t
@@ -32,10 +31,21 @@ def build_ssh_command(host: str, command: str) -> list[str]:
     ssh_command = [shutil.which("ssh"), "-tt", *opts, host, command, "; sleep 0"]
 
     return ssh_command
+
+
 @mcp.tool()
-def run_ssh(host: str, command: str) -> dict[str, t.Any]:
-    """Run an SSH command on a remote host"""
-    ssh_command = [shutil.which("ssh"), "-tt", host, command]
+def run_ssh_read_only(host: str, command: str) -> dict[str, t.Any]:
+    """Run an SSH command on a remote host.
+
+    Only run commands that would not make changes to the system.
+    sudo is not allowed.
+    """
+    if command.casefold().startswith("sudo"):
+        raise MCPError(
+            "Found sudo in command. Running commands with sudo is not allowed."
+        )
+
+    ssh_command = build_ssh_command(host, command)
 
     result = subprocess.run(ssh_command, capture_output=True, text=True)
     return {
@@ -46,7 +56,6 @@ def run_ssh(host: str, command: str) -> dict[str, t.Any]:
 
 
 def main():
-    print("Running server...")
     mcp.run(transport="stdio")
 
 
