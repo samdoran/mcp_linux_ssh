@@ -55,6 +55,27 @@ def run_ssh_read_only(host: str, command: str) -> dict[str, t.Any]:
     }
 
 
+@mcp.tool(title="Run SSH")
+def run_ssh(host: str, command: str) -> dict[str, t.Any]:
+    """Run an ssh command on a remote host with elevated priviliges.
+
+    This command could make changes to the system. Care should be taken
+    to not disable ssh or modify files such as /etc/sudoers, etc/password,
+    or /etc/shadow so as to render tho system inaccessible.
+
+    It can use sudo but should not prompt for password input. The sudo settings
+    shoould allow passwordless sudo on the remote machine.
+    """
+    ssh_command = build_ssh_command(host, command)
+
+    result = subprocess.run(ssh_command, capture_output=True, text=True)
+    return {
+        "return_code": result.returncode,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+    }
+
+
 def main():
     mcp.run(transport="stdio")
 
