@@ -33,7 +33,7 @@ def build_ssh_command(host: str, command: str) -> list[str]:
     return ssh_command
 
 
-@mcp.tool()
+@mcp.tool(title="Run SSH read only")
 def run_ssh_read_only(host: str, command: str) -> dict[str, t.Any]:
     """Run an SSH command on a remote host.
 
