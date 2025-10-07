@@ -37,5 +37,13 @@ mkdir build
 shiv -o build/mcp_linux_ssh --console-script mcp-linux-ssh .
 ```
 
+### Logging ###
+
+Commands and the hosts they are run on are logged to a local file that is rotated once it reaches five megabytes in size. The file location depends on the platform running the MCP server.
+
+**Linux**: `~/.local/share/logs/mcp-linux-ssh.log`
+
+**macOS**: `~/Library/Logs/mcp-linux-ssh.log`
+
 
 [`shiv`]: https://shiv.readthedocs.io/en/latest/
