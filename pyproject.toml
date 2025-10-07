@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 requires-python = ">=3.11"
 name = "mcp_linux_ssh"
 dependencies = [
-    "mcp",
+    "mcp[cli]",
 ]
 version = "0.0.1"
 
@@ -14,4 +14,4 @@ version = "0.0.1"
 where = ["src"]
 
 [project.scripts]
-mcp-linux-ssh = "mcp_linux_ssh.server:main"
+mcp-linux-ssh = "mcp_linux_ssh:server.main"
