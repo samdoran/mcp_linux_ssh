@@ -10,6 +10,7 @@ mcp = FastMCP(
     instructions="",
 )
 
+from mcp_linux_ssh.prompts import system_error
 from mcp_linux_ssh.tools import *  # noqa: E402, F403
 
 
