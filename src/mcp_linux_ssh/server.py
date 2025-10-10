@@ -1,6 +1,7 @@
 import dataclasses
 import shutil
 import subprocess
+import sys
 import typing as t
 
 from mcp.server.fastmcp import FastMCP
@@ -114,8 +115,12 @@ async def run_ssh(
 
 
 def main():
-    file_logger.info("Starting Linux MCP Server")
-    mcp.run(transport="stdio")
+    logger.info("Starting Linux MCP Server")
+    try:
+        mcp.run(transport="stdio")
+    except KeyboardInterrupt:
+        logger.info("Shutting down Linux MCP server")
+        sys.exit()
 
 
 if __name__ == "__main__":
